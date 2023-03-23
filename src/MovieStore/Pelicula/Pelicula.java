@@ -1,4 +1,4 @@
-package Peliculas;
+package MovieStore.Pelicula;
 
 public class Pelicula {
     // ATRIBUTOS
@@ -10,7 +10,6 @@ public class Pelicula {
     private String Pais_Origen;
     private String Descripcion;
     private int Stock;
-    
     private static int Contador_Id = 0;
     
     // METODOS

@@ -1,4 +1,4 @@
-package Cliente;
+    package MovieStore.Cliente;
 
 public class Cliente {
     // ATRIBUTOS
