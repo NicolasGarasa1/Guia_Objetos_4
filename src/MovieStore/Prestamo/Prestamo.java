@@ -6,18 +6,19 @@ public class Prestamo {
     // ATRIBUTOS
     private String Fecha_Retiro;
     private String Fecha_Devolucion;
-    private Pelicula Pelicula_Alquilada;
-    private Cliente Cliente_Alquilador;
+    private int Cliente_Id;
+    private int Pelicula_Id;
     private boolean Activo;
 
     // METODOS
+    
 
     // CONSTRUCTORES
-    public Prestamo(String Fecha_Retiro, String _Fecha_Devolucion, Pelicula _Pelicula_Alquilada, Cliente _Cliente_Alquilador){
+    public Prestamo(String Fecha_Retiro, String _Fecha_Devolucion, int _Pelicula_Id, int _Cliente_Id){
         setFecha_Retiro(Fecha_Retiro);
         setFecha_Devolucion(_Fecha_Devolucion);
-        setPelicula_Alquilada(_Pelicula_Alquilada);
-        setCliente_Alquilador(_Cliente_Alquilador);
+        setCliente_Id(_Cliente_Id);
+        setPelicula_Id(_Pelicula_Id);
         setActivo(true);
     }
 
@@ -34,17 +35,17 @@ public class Prestamo {
     private void setFecha_Devolucion(String fecha_Devolucion) {
         Fecha_Devolucion = fecha_Devolucion;
     }
-    private Pelicula getPelicula_Alquilada() {
-        return Pelicula_Alquilada;
+    private int getCliente_Id() {
+        return Cliente_Id;
     }
-    private void setPelicula_Alquilada(Pelicula pelicula_Alquilada) {
-        Pelicula_Alquilada = pelicula_Alquilada;
+    private void setCliente_Id(int cliente_Id) {
+        Cliente_Id = cliente_Id;
     }
-    private Cliente getCliente_Alquilador() {
-        return Cliente_Alquilador;
+    private int getPelicula_Id() {
+        return Pelicula_Id;
     }
-    private void setCliente_Alquilador(Cliente cliente_Alquilador) {
-        Cliente_Alquilador = cliente_Alquilador;
+    private void setPelicula_Id(int pelicula_Id) {
+        Pelicula_Id = pelicula_Id;
     }
     private boolean isActivo() {
         return Activo;
