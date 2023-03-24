@@ -1,11 +1,16 @@
     package MovieStore.Cliente;
 
-public class Cliente {
+    import MovieStore.Prestamo.Prestamo;
+
+    import java.util.ArrayList;
+
+    public class Cliente {
     // ATRIBUTOS
     private int Identificador;
     private String Nombre;
     private String Telefono;
     private String Direccion;
+    private ArrayList<Prestamo> Ultimas_Peliculas_Alquiladas;
     private static int Contador_Id=0;
 
     // METODOS
@@ -18,6 +23,7 @@ public class Cliente {
         setNombre(_Nombre);
         setDireccion(_Direccion);
         setTelefono(_Telefono);
+        setUltimas_Peliculas_Alquiladas(new ArrayList<>(5));
     }
 
     // GETTERS AND SETTERS
@@ -45,7 +51,13 @@ public class Cliente {
     private void setDireccion(String direccion) {
         Direccion = direccion;
     }
-    public static int getContador_Id() {
+    public ArrayList<Prestamo> getUltimas_Peliculas_Alquiladas() {
+        return Ultimas_Peliculas_Alquiladas;
+    }
+    private void setUltimas_Peliculas_Alquiladas(ArrayList<Prestamo> ultimas_Peliculas_Alquiladas) {
+        Ultimas_Peliculas_Alquiladas = ultimas_Peliculas_Alquiladas;
+    }
+    private static int getContador_Id() {
         return Contador_Id;
     }
     private static void setContador_Id(int contador_Id) {

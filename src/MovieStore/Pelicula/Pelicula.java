@@ -72,13 +72,13 @@ public class Pelicula {
     private void setDescripcion(String descripcion) {
         Descripcion = descripcion;
     }
-    private int getStock() {
+    public int getStock() {
         return Stock;
     }
     private void setStock(int stock) {
         Stock = stock;
     }
-    public static int getContador_Id() {
+    private static int getContador_Id() {
         return Contador_Id;
     }
     private static void setContador_Id(int contador_Id) {

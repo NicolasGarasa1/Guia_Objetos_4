@@ -23,31 +23,31 @@ public class Prestamo {
     }
 
     // GETTERS AND SETTERS
-    private String getFecha_Retiro() {
+    public String getFecha_Retiro() {
         return Fecha_Retiro;
     }
     private void setFecha_Retiro(String fecha_Retiro) {
         Fecha_Retiro = fecha_Retiro;
     }
-    private String getFecha_Devolucion() {
+    public String getFecha_Devolucion() {
         return Fecha_Devolucion;
     }
     private void setFecha_Devolucion(String fecha_Devolucion) {
         Fecha_Devolucion = fecha_Devolucion;
     }
-    private int getCliente_Id() {
+    public int getCliente_Id() {
         return Cliente_Id;
     }
     private void setCliente_Id(int cliente_Id) {
         Cliente_Id = cliente_Id;
     }
-    private int getPelicula_Id() {
+    public int getPelicula_Id() {
         return Pelicula_Id;
     }
     private void setPelicula_Id(int pelicula_Id) {
         Pelicula_Id = pelicula_Id;
     }
-    private boolean isActivo() {
+    public boolean isActivo() {
         return Activo;
     }
     private void setActivo(boolean activo) {

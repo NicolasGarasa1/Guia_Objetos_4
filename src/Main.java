@@ -1,29 +1,33 @@
 import MovieStore.Local;
+import java.util.Scanner;
 
 public class Main {
-    static Local MovieStore = new Local();
     public static void main(String[] args) {
-
+        Scanner Teclado = new Scanner(System.in);
+        int Swtch;
+        int Continuar=1;
+        do {
+            MovieStore.MenuPrincipal();
+            Swtch = Teclado.nextInt();
+            switch (Swtch){
+                case 1: // CLIENTES
+                    MovieStore.MenuClientes(Teclado);
+                    break;
+                case 2: // PELICULAS
+                    MovieStore.MenuPeliculas(Teclado);
+                    break;
+                case 3: // ALQUILERES
+                    MovieStore.MenuAlquieleres(Teclado);
+                    break;
+                case 0: // SALIR
+                    Continuar=0;
+                    break;
+                default: // VOLVER
+                    break;
+            }
+        }while(Continuar==1);
+        Teclado.close();
     }
-    public void Menu(){
-        System.out.print("\n Bienvenido.");
-        System.out.print("\n Su saldo es de:"++".");
-        System.out.print("\n Elija una de las siguientes opciones.");
-        System.out.print("\n");
-        System.out.print("\n 01 - Consultar alquileres vigentes.");
-        System.out.print("\n 02 - Consultar alquileres hoy.");
-        System.out.print("\n 03 - Consultar alquileres de un cliente.");
-        System.out.print("\n 04 - Consultar titulos mas alquilados.");
-        System.out.print("\n 05 - Consultar titulos por genero."); // ORDENAMIENTOS
-        System.out.print("\n 06 - ");
+    static Local MovieStore = new Local();
 
-
-
-        System.out.print("\n 01 - Añadir pelicula");
-        System.out.print("\n 02 - Registrar cliente");
-        System.out.print("\n 03 - Generar retiro.");
-        System.out.print("\n 04 - Consultar stock");
-
-
-    }
 }
