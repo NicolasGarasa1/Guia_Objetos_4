@@ -191,13 +191,21 @@ public class Local {
             Teclado.nextLine();
             return;
         }
+        else{
+            System.out.print("\n [Cliente Id]---[Pelicula Id]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+            for(int i=0 ; i<getClientes().get(Cliente_Index).getUltimas_Peliculas_Alquiladas().size() ; i++){
+
+            }
+
+        }
 
 
     }
+
     // METODOS -- PRESTAMOS
     public void Mostrar_Todos_Prestamos(Scanner Teclado){
         System.out.print("\n Prestamos:");
-        System.out.print("\n [Cliente Id]---[Pelicula Id]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+        System.out.print("\n [Cliente Id]---[Pelicula Id]---[-----Titulo-----]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
         for(int i=0 ; i<getPrestamos().size() ; i++){
             Mostrar_Un_Prestamo(getPrestamos().get(i));
         }
@@ -208,6 +216,7 @@ public class Local {
     public void Mostrar_Un_Prestamo(Prestamo Mostrar){
         System.out.printf("\n [%10d]---", Mostrar.getCliente_Id());
         System.out.printf("[%11s]---", Mostrar.getPelicula_Id());
+        System.out.printf("[%16s]---", );
         if (Mostrar.isActivo()){
             System.out.printf("[ Alquilado]---");
         }
@@ -278,6 +287,15 @@ public class Local {
         System.out.printf("[%5d]---", Mostrar.getStock());
         System.out.printf("[%28s]", Mostrar.getClasificacion_Audiencia());
     }
+    public String Retornar_Titulo(int Id){
+        for(int i=0 ; i<getPeliculas().size() ; i++){
+            if (Id == getPeliculas().get(i).getIdentificador()){
+                return getPeliculas().get(i).getTitulo();
+            }
+        }
+        return "";
+    }
+
     // CONSTRUCTOR
     public Local(){
         setPrestamos(new ArrayList<>());
