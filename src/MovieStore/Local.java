@@ -74,9 +74,11 @@ public class Local {
             System.out.print("\n Bienvenido.");
             System.out.print("\n Elija una de las siguientes opciones.");
             System.out.print("\n 01 - Ver todas las peliculas.");
-            System.out.print("\n 02 - Buscar una pelicula por Id.");
+            System.out.print("\n 02 - Buscar una pelicula por titulo.");
             System.out.print("\n 03 - Añadir una nueva pelicula.");
             System.out.print("\n 04 - Exportar todas las peliculas.");
+            System.out.print("\n");
+            System.out.print("\n 00 - Volver.");
             System.out.print("\n");
             System.out.print("\n Opcion elegida: ");
             Swtch = Teclado.nextInt();
@@ -85,6 +87,7 @@ public class Local {
                     Mostrar_Todas_Peliculas(Teclado);
                     break;
                 case 2: // BUSCAR PELICULA POR ID
+                    Buscar_Nombre(Teclado);
                     break;
                 case 3: // AÑADIR UNA NUEVA PELICULA
                     Añadir_Pelicula(Teclado);
@@ -307,6 +310,47 @@ public class Local {
             }
         }
         return "";
+    }
+    public void Buscar_Nombre(Scanner Teclado){
+        String Nombre;
+        Teclado.nextLine();
+        System.out.print("\n Ingrese el nombre de la pelicula buscada.");
+        System.out.print("\n Nombre: ");
+        Nombre = Teclado.nextLine();
+
+        boolean Encontrada = false;
+        int Pelicula_Index=0;
+
+        for(int i=0 ; i<getPeliculas().size() && !Encontrada ; i++){
+            if (getPeliculas().get(i).getTitulo().equals(Nombre)){
+                Encontrada = !Encontrada;
+                Pelicula_Index=i;
+            }
+        }
+        if (!Encontrada) {
+            System.out.print("\n No se han encontrado peliculas con el nombre exactamente igual al buscado.");
+            System.out.print("\n A continuacion se mostraran, si existen, titulos cuyo substring sea el titulo ingresado.");
+            System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+            for (int i = 0; i < getPeliculas().size() && !Encontrada; i++) {
+                if (getPeliculas().get(i).getTitulo().contains(Nombre)) {
+                    Mostrar_Una_Pelicula(getPeliculas().get(i));
+                }
+            }
+            Teclado.nextLine();
+            System.out.print("\n Aprete enter para volver al menu.");
+            Teclado.nextLine();
+            return;
+
+        }
+        else{
+            System.out.print("\n Informacion de la pelicula:");
+            System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+            Mostrar_Una_Pelicula(getPeliculas().get(Pelicula_Index));
+            Teclado.nextLine();
+            System.out.print("\n Aprete enter para volver al menu.");
+            Teclado.nextLine();
+        }
+
     }
 
     // EXPORTAR
