@@ -1,10 +1,12 @@
 package MovieStore;
-
 import MovieStore.Cliente.Cliente;
 import MovieStore.Pelicula.Pelicula;
 import MovieStore.Prestamo.Prestamo;
 
+import java.io.*;
+
 import javax.management.loading.PrivateClassLoader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,7 +30,7 @@ public class Local {
         System.out.print("\n");
         System.out.print("\n Opcion elegida: ");
     }
-    public void MenuClientes(Scanner Teclado){
+    public void MenuClientes(Scanner Teclado) throws IOException{
         int Swtch=0;
         int Continuar=1;
         do {
@@ -52,8 +54,10 @@ public class Local {
                     Añadir_Cliente(Teclado);
                     break;
                 case 3: // EXPORTAR TODOS LOS CLIENTES
+                    Exportar_Clientes();
                     break;
                 case 4: // VER ULTIMAS 5 PELICULAS DE UN CLIENTE
+                    Mostrar_Ultimas_Peliculas_Alquiladas(Teclado);
                     break;
                 case 0:
                     Continuar=0;
@@ -201,6 +205,15 @@ public class Local {
 
 
     }
+    public void Exportar_Clientes() throws IOException{
+        String Ruta = "C:\\Users\\Nicolas\\IdeaProjects\\Guia_Objetos_4\\src\\Archivos\\Clientes.txt";
+        for(int i=0 ; i<getClientes().size() ; i++){
+            Escribir_Archivo(Ruta, "Cliente[Id:"+getClientes().get(i).getIdentificador()+". ");
+            Escribir_Archivo(Ruta, "Nombre:\""+getClientes().get(i).getNombre()+"\". ");
+            Escribir_Archivo(Ruta, "Telefono:"+getClientes().get(i).getTelefono()+". ");
+            Escribir_Archivo(Ruta, "Direccion:"+getClientes().get(i).getNombre()+"]");
+        }
+    }
 
     // METODOS -- PRESTAMOS
     public void Mostrar_Todos_Prestamos(Scanner Teclado){
@@ -216,7 +229,7 @@ public class Local {
     public void Mostrar_Un_Prestamo(Prestamo Mostrar){
         System.out.printf("\n [%10d]---", Mostrar.getCliente_Id());
         System.out.printf("[%11s]---", Mostrar.getPelicula_Id());
-        System.out.printf("[%16s]---", );
+        System.out.printf("[%16s]---", Retornar_Titulo(Mostrar.getPelicula_Id()));
         if (Mostrar.isActivo()){
             System.out.printf("[ Alquilado]---");
         }
@@ -294,6 +307,27 @@ public class Local {
             }
         }
         return "";
+    }
+
+    // EXPORTAR
+    public void Escribir_Archivo(String Ruta, String Mensaje) throws IOException {
+        FileWriter Archivo = null;
+        PrintWriter Escritor = null;
+        try {
+            Archivo = new FileWriter(Ruta, true);
+            Escritor = new PrintWriter(Archivo);
+            Escritor.print(Mensaje);
+            for (int i=Mensaje.length() ; i<200 ; i++){
+                Escritor.print(" ");
+            }
+            Escritor.print("\r\n");
+        }
+        catch (Exception _Exception){
+            System.out.println(_Exception.getMessage());
+        }
+        finally {
+            Archivo.close();
+        }
     }
 
     // CONSTRUCTOR
