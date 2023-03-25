@@ -327,11 +327,12 @@ public class Local {
                 Pelicula_Index=i;
             }
         }
+
         if (!Encontrada) {
             System.out.print("\n No se han encontrado peliculas con el nombre exactamente igual al buscado.");
             System.out.print("\n A continuacion se mostraran, si existen, titulos cuyo substring sea el titulo ingresado.");
             System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
-            for (int i = 0; i < getPeliculas().size() && !Encontrada; i++) {
+            for (int i = 0; i < getPeliculas().size() ; i++) {
                 if (getPeliculas().get(i).getTitulo().contains(Nombre)) {
                     Mostrar_Una_Pelicula(getPeliculas().get(i));
                 }
