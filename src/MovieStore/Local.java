@@ -2,9 +2,14 @@ package MovieStore;
 import MovieStore.Cliente.Cliente;
 import MovieStore.Pelicula.Pelicula;
 import MovieStore.Prestamo.Prestamo;
+
+import javax.swing.text.DateFormatter;
 import java.io.*;
 import java.io.FileWriter;
+import java.sql.SQLOutput;
+import java.text.Normalizer;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,6 +43,7 @@ public class Local {
             System.out.print("\n 02 - Aniadir un nuevo cliente.");
             System.out.print("\n 03 - Exportar todos los clientes.");
             System.out.print("\n 04 - Ver ultimas 5 peliculas alquiladas de un cliente.");
+            System.out.print("\n 05 - Importar.");
             System.out.print("\n");
             System.out.print("\n 00 - Volver.");
             System.out.print("\n");
@@ -52,6 +58,8 @@ public class Local {
                         Exportar_Clientes();
                 case 4 -> // VER ULTIMAS 5 PELICULAS DE UN CLIENTE
                         Mostrar_Ultimas_Peliculas_Alquiladas(Teclado);
+                case 5 -> // IMPORTAR ARCHIVO
+                        Importar_Clientes();
                 case 0 -> Continuar = 0;
                 default -> {
                 }
@@ -68,6 +76,7 @@ public class Local {
             System.out.print("\n 02 - Buscar una pelicula por titulo.");
             System.out.print("\n 03 - Aniadir una nueva pelicula.");
             System.out.print("\n 04 - Exportar todas las peliculas.");
+            System.out.print("\n 05 - Importar peliculas.");
             System.out.print("\n");
             System.out.print("\n 00 - Volver.");
             System.out.print("\n");
@@ -82,6 +91,8 @@ public class Local {
                         Aniadir_Pelicula(Teclado);
                 case 4 -> // EXPORTAR TODAS LAS PELICULAS
                         Exportar_Peliculas();
+                case 5 -> // EXPORTAR TODAS LAS PELICULAS
+                        Importar_Peliculas();
                 case 0 -> Continuar = 0;
                 default -> {
                 }
@@ -101,6 +112,7 @@ public class Local {
             System.out.print("\n 05 - Generar un nuevo alquiler.");
             System.out.print("\n 06 - Exportar todos los alquileres.");
             System.out.print("\n 07 - Devolucion de una pelicula.");
+            System.out.print("\n 08 - Importar alquileres.");
             System.out.print("\n");
             System.out.print("\n 00 - Volver.");
             System.out.print("\n");
@@ -127,6 +139,9 @@ public class Local {
                     break;
                 case 7: // DEVOLVER UN ALQUILER
                     Devolucion_Pelicula(Teclado);
+                case 8: // IMPORTAR ALQUILERES
+                    Importar_Alquileres();
+                    break;
                 case 0:
                     Continuar=0;
                     break;
@@ -140,7 +155,7 @@ public class Local {
     private void Ver_Alquiles_Hoy(Scanner Teclado){
         Cliente Aux;
         Prestamo Aux_2;
-        System.out.print("\n [Cliente Id]---[Pelicula Id]---[-----Titulo-----]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+        System.out.print("\n [Cliente Id]---[Pelicula Id]---[----------Titulo----------]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
         for(int i=0 ; i<getClientes().size() ; i++){
             Aux = getClientes().get(i);
             for(int j=0 ; j<Aux.getUltimas_Peliculas_Alquiladas().size() ; j++){
@@ -171,6 +186,7 @@ public class Local {
         }
         else{
             System.out.print("\n Ingrese el Id de las siguientes peliculas que fueron prestadas al Cliente.");
+            System.out.print("\n [-Id-]---[----------Titulo----------]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
             for(int i=0 ; i<getClientes().get(Cliente_Id).getUltimas_Peliculas_Alquiladas().size() ; i++){
                 if(getClientes().get(Cliente_Id).getUltimas_Peliculas_Alquiladas().get(i).isActivo()){
                     Mostrar_Una_Pelicula(Peliculas.get(getClientes().get(Cliente_Id).getUltimas_Peliculas_Alquiladas().get(i).getPelicula_Id()));
@@ -216,7 +232,7 @@ public class Local {
     private void Mostrar_Todos_Prestamos(Scanner Teclado){
         Cliente Aux;
         System.out.print("\n Prestamos:");
-        System.out.print("\n [Cliente Id]---[Pelicula Id]---[-----Titulo-----]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+        System.out.print("\n [Cliente Id]---[Pelicula Id]---[----------Titulo----------]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
         for(int i=0 ; i<getClientes().size() ; i++){
             Aux = getClientes().get(i);
             for(int j=0 ; j<Aux.getUltimas_Peliculas_Alquiladas().size() ; j++){
@@ -230,8 +246,7 @@ public class Local {
     private void Mostrar_Un_Prestamo(Prestamo Mostrar){
         System.out.printf("\n [%10d]---", Mostrar.getCliente_Id());
         System.out.printf("[%11s]---", Mostrar.getPelicula_Id());
-        //System.out.printf("[%16s]---", Retornar_Titulo(Mostrar.getPelicula_Id()));
-        System.out.printf("[%16s]---", getPeliculas().get(Existe_Pelicula(Mostrar.getPelicula_Id())).getTitulo());
+        System.out.printf("[%26s]---", getPeliculas().get(Existe_Pelicula(Mostrar.getPelicula_Id())).getTitulo());
         if (Mostrar.isActivo()){
             System.out.print("[ Alquilado]---");
         }
@@ -277,7 +292,7 @@ public class Local {
         }
         else {// ELSE MOSTRAR INFORMACION
             System.out.print("\n Pelicula encontrado! La informacion de la pelicula es la siguiente:");
-            System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+            System.out.print("\n [-Id-]---[----------Titulo----------]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
             Mostrar_Una_Pelicula(getPeliculas().get(Pelicula_Id));
         }
         if (getPeliculas().get(Pelicula_Id).getStock()==0){
@@ -290,7 +305,7 @@ public class Local {
             Prestamo NuevoPrestamo = new Prestamo(LocalDate.now(), LocalDate.now().plusWeeks(1), Pelicula_Id, Cliente_Id);
 
             System.out.print("\n La informacion del nuevo prestamo es la siguiente:");
-            System.out.print("\n [Cliente Id]---[Pelicula Id]---[-----Titulo-----]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+            System.out.print("\n [Cliente Id]---[Pelicula Id]---[----------Titulo----------]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
             Mostrar_Un_Prestamo(NuevoPrestamo);
 
             Pelicula_Id=1;
@@ -332,7 +347,7 @@ public class Local {
     private void Ver_AlquilesVigentes(Scanner Teclado){
         Cliente Aux;
         Prestamo Aux_2;
-        System.out.print("\n [Cliente Id]---[Pelicula Id]---[-----Titulo-----]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+        System.out.print("\n [Cliente Id]---[Pelicula Id]---[----------Titulo----------]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
         for(int i=0 ; i<getClientes().size() ; i++){
             Aux = getClientes().get(i);
             for(int j=0 ; j<Aux.getUltimas_Peliculas_Alquiladas().size() ; j++){
@@ -345,6 +360,37 @@ public class Local {
         Teclado.nextLine();
         System.out.print("\n\n Aprete enter para continuar.");
         Teclado.nextLine();
+    }
+    private void Importar_Alquileres(){
+        String Ruta = "C:\\Users\\Nicolas\\IdeaProjects\\Guia_Objetos_4\\src\\Archivos\\Importar_Alquileres.txt";
+        FileReader Archivo;
+        BufferedReader Lector;
+        try{
+            Archivo = new FileReader(Ruta);
+            if (Archivo.ready()){
+                Lector = new BufferedReader(Archivo);
+                DateTimeFormatter Formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String Leido;
+                ArrayList<String> Leidos = new ArrayList<>();
+                Prestamo Nuevo;
+                while ((Leido = Lector.readLine())!=null){
+                    Leidos.add(Leido);
+                }
+                for(int i=0 ; i<Leidos.size() ; i=i+5){
+                    Nuevo = new Prestamo(LocalDate.parse(Leidos.get(i), Formatter), LocalDate.parse(Leidos.get(i+1), Formatter), Integer.parseInt(Leidos.get(i+2)), Integer.parseInt(Leidos.get(i+3)), Boolean.parseBoolean(Leidos.get(i+4)));
+                    getClientes().get(Integer.parseInt(Leidos.get(i+3))).getUltimas_Peliculas_Alquiladas().add(Nuevo);
+                    setSaldo(getSaldo()+150);
+                }
+                Lector.close();
+            }
+            else{
+                System.out.print("\n No se pudo abrir el archivo.");
+            }
+
+        }
+        catch (Exception _Exception){
+            System.out.println(_Exception.getMessage());
+        }
     }
     
     // METODOS -- CLIENTES
@@ -397,7 +443,7 @@ public class Local {
             System.out.print("\n El Id ingresado no existe dentro de los clientes registrados.");
         }
         else{
-            System.out.print("\n [Cliente Id]---[Pelicula Id]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
+            System.out.print("\n [Cliente Id]---[Pelicula Id]---[----------Titulo----------]---[--Activo--]---[Fecha de Retiro]---[Fecha de Devolucion]");
             for(int i=0 ; i<getClientes().get(Cliente_Id).getUltimas_Peliculas_Alquiladas().size() ; i++){
                 Mostrar_Un_Prestamo(getClientes().get(Cliente_Id).getUltimas_Peliculas_Alquiladas().get(i));
             }
@@ -405,8 +451,6 @@ public class Local {
         }
         System.out.print("\n Aprete enter para volver al menu.");
         Teclado.nextLine();
-
-
     }
     private void Exportar_Clientes(){
         String Ruta = "C:\\Users\\Nicolas\\IdeaProjects\\Guia_Objetos_4\\src\\Archivos\\Clientes.txt";
@@ -429,6 +473,35 @@ public class Local {
             }
         }
         return -1;
+    }
+    private void Importar_Clientes(){
+        String Ruta = "C:\\Users\\Nicolas\\IdeaProjects\\Guia_Objetos_4\\src\\Archivos\\Importar_Clientes.txt";
+        FileReader Archivo;
+        BufferedReader Lector;
+        try{
+            Archivo = new FileReader(Ruta);
+            if (Archivo.ready()){
+                Lector = new BufferedReader(Archivo);
+                String Leido;
+                ArrayList<String> Leidos = new ArrayList<>();
+                Cliente Nuevo;
+                while ((Leido = Lector.readLine())!=null){
+                    Leidos.add(Leido);
+                }
+                for(int i=0 ; i<Leidos.size() ; i=i+3){
+                    Nuevo = new Cliente(Leidos.get(i), Leidos.get(i+1), Leidos.get(i+2));
+                    getClientes().add(Nuevo);
+                }
+                Lector.close();
+            }
+            else{
+                System.out.print("\n No se pudo abrir el archivo.");
+            }
+
+        }
+        catch (Exception _Exception){
+            System.out.println(_Exception.getMessage());
+        }
     }
 
     // METODOS -- PELICULAS
@@ -474,7 +547,7 @@ public class Local {
     }
     private void Mostrar_Todas_Peliculas(Scanner Teclado){
         System.out.print("\n Peliculas:");
-        System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+        System.out.print("\n [-Id-]---[----------Titulo----------]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
         for(int i=0 ; i<getPeliculas().size() ; i++){
             Mostrar_Una_Pelicula(getPeliculas().get(i));
         }
@@ -484,7 +557,7 @@ public class Local {
     }
     private void Mostrar_Una_Pelicula(Pelicula Mostrar){
         System.out.printf("\n [%4d]---", Mostrar.getIdentificador());
-        System.out.printf("[%16s]---", Mostrar.getTitulo());
+        System.out.printf("[%26s]---", Mostrar.getTitulo());
         System.out.printf("[%8d]---", Mostrar.getDuracion());
         System.out.printf("[%20s]---", Mostrar.getFecha_Lanzamiento());
         System.out.printf("[%24s]---", Mostrar.getPais_Origen());
@@ -511,7 +584,7 @@ public class Local {
         if (!Encontrada) {
             System.out.print("\n No se han encontrado peliculas con el nombre exactamente igual al buscado.");
             System.out.print("\n A continuacion se mostraran, si existen, titulos cuyo substring sea el titulo ingresado.");
-            System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+            System.out.print("\n [-Id-]---[----------Titulo----------]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
             for (int i = 0; i < getPeliculas().size() ; i++) {
                 if (getPeliculas().get(i).getTitulo().contains(Nombre)) {
                     Mostrar_Una_Pelicula(getPeliculas().get(i));
@@ -520,7 +593,7 @@ public class Local {
         }
         else{
             System.out.print("\n Informacion de la pelicula:");
-            System.out.print("\n [-Id-]---[-----Titulo-----]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
+            System.out.print("\n [-Id-]---[----------Titulo----------]---[Duracion]---[Fecha de Lanzamiento]---[-----Pais de Origen-----]---[Stock]---[Clasificacion de Audiciencia]");
             Mostrar_Una_Pelicula(getPeliculas().get(Pelicula_Index));
         }
         Teclado.nextLine();
@@ -547,12 +620,41 @@ public class Local {
         }
     }
     private int Existe_Pelicula(int Id_Buscado){
-        for (int i=0 ; i<getClientes().size() ; i++){
+        for (int i=0 ; i<getPeliculas().size() ; i++){
             if (getPeliculas().get(i).getIdentificador() == Id_Buscado){
                 return i;
             }
         }
         return -1;
+    }
+    private void Importar_Peliculas(){
+        String Ruta = "C:\\Users\\Nicolas\\IdeaProjects\\Guia_Objetos_4\\src\\Archivos\\Importar_Peliculas.txt";
+        FileReader Archivo;
+        BufferedReader Lector;
+        try{
+            Archivo = new FileReader(Ruta);
+            if (Archivo.ready()){
+                Lector = new BufferedReader(Archivo);
+                String Leido;
+                ArrayList<String> Leidos = new ArrayList<>();
+                Pelicula Nuevo;
+                while ((Leido = Lector.readLine())!=null){
+                    Leidos.add(Leido);
+                }
+                for(int i=0 ; i<Leidos.size() ; i=i+7){
+                    Nuevo = new Pelicula(Leidos.get(i), Leidos.get(i+1), Integer.parseInt(Leidos.get(i+2)), Leidos.get(i+3), Leidos.get(i+4),Leidos.get(i+5), Integer.parseInt(Leidos.get(i+6)));
+                    getPeliculas().add(Nuevo);
+                }
+                Lector.close();
+            }
+            else{
+                System.out.print("\n No se pudo abrir el archivo.");
+            }
+
+        }
+        catch (Exception _Exception){
+            System.out.println(_Exception.getMessage());
+        }
     }
 
     // EXPORTAR

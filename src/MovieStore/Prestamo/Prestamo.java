@@ -26,6 +26,13 @@ public class Prestamo {
         setPelicula_Id(_Pelicula_Id);
         setActivo(true);
     }
+    public Prestamo(LocalDate _Fecha_Retiro, LocalDate _Fecha_Devolucion, int _Pelicula_Id, int _Cliente_Id, boolean _Activo){
+        setFecha_Retiro(_Fecha_Retiro);
+        setFecha_Devolucion(_Fecha_Devolucion);
+        setCliente_Id(_Cliente_Id);
+        setPelicula_Id(_Pelicula_Id);
+        setActivo(_Activo);
+    }
 
     // GETTERS
     public int getCliente_Id() {

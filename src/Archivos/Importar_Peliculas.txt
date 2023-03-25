@@ -1,0 +1,77 @@
+Titanic
+1997/02/05
+194
+G
+USA
+Hundimiento
+50
+Cars
+2006/06/29
+117
+G
+USA
+Carreras
+15
+Hunger Games
+2013/03/01
+123
+PG+13
+SPN
+Dead
+20
+Shutter Island
+2010/02/18
+148
+UNRATED
+USA
+Misterio
+100
+El Padrino
+1972/03/15
+175
+R
+USA
+Drama
+55
+La La Land
+2016/12/09
+128
+PG-13
+USA
+Musical
+25
+El retorno del rey
+2003/12/17
+201
+PG-13
+ARG
+Fantasía
+90
+La forma del agua
+2017/12/01
+123
+R
+PRG
+Fantasía
+60
+El Gran Hotel Budapest
+2014/03/07
+100
+R
+JPN
+Comedia
+15
+Interestelar
+2014/11/07
+169
+PG-13
+USA
+Ciencia ficción
+85
+Toy Story 4
+2019/06/20
+100
+G
+CMB
+Animación
+20
