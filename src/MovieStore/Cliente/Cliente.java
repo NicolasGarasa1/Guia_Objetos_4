@@ -23,42 +23,44 @@
         setNombre(_Nombre);
         setDireccion(_Direccion);
         setTelefono(_Telefono);
-        setUltimas_Peliculas_Alquiladas(new ArrayList<>(5));
+        setUltimas_Peliculas_Alquiladas(new ArrayList<>());
     }
 
-    // GETTERS AND SETTERS
+    // GETTERS
     public int getIdentificador() {
         return Identificador;
     }
+    public String getNombre() {
+            return Nombre;
+        }
+    public String getTelefono() {
+            return Telefono;
+        }
+    public String getDireccion() {
+            return Direccion;
+        }
+    public ArrayList<Prestamo> getUltimas_Peliculas_Alquiladas() {
+            return Ultimas_Peliculas_Alquiladas;
+        }
+    private static int getContador_Id() {
+            return Contador_Id;
+        }
+
+    // SETTERS
     private void setIdentificador(int identificador) {
         Identificador = identificador;
-    }
-    public String getNombre() {
-        return Nombre;
     }
     private void setNombre(String nombre) {
         Nombre = nombre;
     }
-    public String getTelefono() {
-        return Telefono;
-    }
     private void setTelefono(String telefono) {
         Telefono = telefono;
-    }
-    public String getDireccion() {
-        return Direccion;
     }
     private void setDireccion(String direccion) {
         Direccion = direccion;
     }
-    public ArrayList<Prestamo> getUltimas_Peliculas_Alquiladas() {
-        return Ultimas_Peliculas_Alquiladas;
-    }
     private void setUltimas_Peliculas_Alquiladas(ArrayList<Prestamo> ultimas_Peliculas_Alquiladas) {
         Ultimas_Peliculas_Alquiladas = ultimas_Peliculas_Alquiladas;
-    }
-    private static int getContador_Id() {
-        return Contador_Id;
     }
     private static void setContador_Id(int contador_Id) {
         Contador_Id = contador_Id;

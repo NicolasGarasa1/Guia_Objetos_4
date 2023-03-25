@@ -1,0 +1,1 @@
+Alquiler[Cliente Id:0. Pelicula Id:0. Titulo:"Titani". Fecha retiro:2023-03-25. Fecha devolucion:2023-04-01]                                                                                            
