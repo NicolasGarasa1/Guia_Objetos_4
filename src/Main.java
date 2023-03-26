@@ -22,6 +22,7 @@ public class Main {
             }
         }while(Continuar==1);
         Teclado.close();
+
     }
     static Local MovieStore = new Local();
 
